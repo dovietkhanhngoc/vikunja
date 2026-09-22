@@ -52,6 +52,7 @@ import {
 	faListOl,
 	faLock,
 	faMinus,
+	faMicrophone,
 	faPaperclip,
 	faPaste,
 	faPen,
@@ -171,6 +172,7 @@ library.add(faList)
 library.add(faListOl)
 library.add(faLock)
 library.add(faMinus)
+library.add(faMicrophone)
 library.add(faPaperclip)
 library.add(faPaste)
 library.add(faPen)

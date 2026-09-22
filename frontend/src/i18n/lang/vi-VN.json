@@ -787,7 +787,13 @@
 			"setAsCover": "Tạo ảnh bìa",
 			"unsetAsCover": "Gỡ ảnh bìa",
 			"successfullyChangedCoverImage": "Ảnh bìa đã được đổi thành công.",
-			"usedAsCover": "Ảnh bìa"
+			"usedAsCover": "Ảnh bìa",
+			"recordAudio": "Ghi âm",
+			"preparingRecording": "Đang chờ micrô…",
+			"recordingAudio": "Đang ghi {duration}",
+			"stopRecording": "Dừng và tải lên",
+			"recordingFailed": "Ghi âm thất bại. Vui lòng thử lại.",
+			"microphoneAccessFailed": "Quyền truy cập micrô bị từ chối hoặc không khả dụng."
 		},
 		"comment": {
 			"title": "Bình luận",

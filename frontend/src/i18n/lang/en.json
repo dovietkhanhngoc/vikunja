@@ -1200,7 +1200,13 @@
       "usedAsCover": "Cover image",
       "play": "Play",
       "playFile": "Play {file}",
-      "audioError": "Could not play this audio file."
+      "audioError": "Could not play this audio file.",
+      "recordAudio": "Record audio",
+      "preparingRecording": "Waiting for microphone…",
+      "recordingAudio": "Recording {duration}",
+      "stopRecording": "Stop and upload",
+      "recordingFailed": "The audio recording failed. Please try again.",
+      "microphoneAccessFailed": "Microphone access was denied or is unavailable."
     },
     "comment": {
       "title": "Comments",

@@ -121,17 +121,24 @@
 			</div>
 		</div>
 
-		<XButton
+		<div
 			v-if="editEnabled"
-			:disabled="loading"
-			class="mbe-4"
-			icon="cloud-upload-alt"
-			variant="secondary"
-			:shadow="false"
-			@click="filesRef?.click()"
+			class="attachment-create-actions mbe-4"
 		>
-			{{ $t('task.attachment.upload') }}
-		</XButton>
+			<XButton
+				:disabled="loading"
+				icon="cloud-upload-alt"
+				variant="secondary"
+				:shadow="false"
+				@click="filesRef?.click()"
+			>
+				{{ $t('task.attachment.upload') }}
+			</XButton>
+			<AudioRecorder
+				:disabled="loading"
+				@recorded="file => uploadFilesToTask([file])"
+			/>
+		</div>
 
 		<!-- Dropzone -->
 		<Teleport :to="dropzoneTeleportTarget">
@@ -252,6 +259,7 @@ import {useI18n} from 'vue-i18n'
 import FilePreview from '@/components/tasks/partials/FilePreview.vue'
 import ImageLightbox from '@/components/misc/ImageLightbox.vue'
 import AudioPreview from '@/components/tasks/partials/AudioPreview.vue'
+import AudioRecorder from '@/components/tasks/partials/AudioRecorder.vue'
 
 type AudioPreviewInstance = InstanceType<typeof AudioPreview>
 
@@ -604,6 +612,13 @@ defineExpose({
 
 .files {
 	margin-block-end: 1rem;
+}
+
+.attachment-create-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: .5rem;
 }
 
 .attachment {
