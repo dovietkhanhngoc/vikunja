@@ -92,7 +92,7 @@ Vikunja đã có sẵn task/project, Inbox, Upcoming/quá hạn, recurrence, nhi
 
 Ứng dụng chưa phải bản hoàn chỉnh và chưa được deploy. Các hạng mục chính còn lại:
 
-1. Thiết lập môi trường backend có Go 1.27 và Mage; xác minh backend baseline.
+1. Duy trì backend baseline đã thiết lập bằng Go 1.27, Mage 1.17.2, GCC/CGO và các lệnh Mage; xem chi tiết kiểm chứng bên dưới.
 2. Telegram account/chat linking an toàn.
 3. Telegram reminder delivery dùng pipeline reminder hiện có, có idempotency, retry và trạng thái lỗi.
 4. IndexedDB offline outbox cho create/update/complete task.
@@ -107,10 +107,13 @@ Vikunja đã có sẵn task/project, Inbox, Upcoming/quá hạn, recurrence, nhi
 
 ### Bước 1 — Chuẩn bị backend và xác nhận baseline
 
-- Kiểm tra phiên bản Go/Mage hiện tại trước khi cài gì.
-- Hướng dẫn người dùng cài Go 1.27 và Mage nếu còn thiếu.
-- Chạy lệnh Mage đúng theo `AGENTS.md`; không dùng `go test` trực tiếp.
-- Lưu output backend test vào file theo quy tắc repository.
+- Đã cài và xác nhận Go 1.27.0, Mage 1.17.2, WinLibs GCC 16.1.0 và `CGO_ENABLED=1` trên Windows.
+- Đã sửa Mage harness để compile trên Windows và sửa đường dẫn selective fixture trong embedded filesystem.
+- `mage test:web` đạt (`pkg/webtests`, 136.738 giây).
+- `mage test:feature` chạy hết nhưng còn baseline fail ở sáu package: `pkg/config`, `pkg/db`, `pkg/log`, `pkg/metrics`, `pkg/models` và `pkg/modules/keyvalue`. Nguyên nhân gồm kỳ vọng đường dẫn Unix, khóa file log trên Windows, assertion phụ thuộc thời gian, fixture count và TTL timing.
+- Mọi lần test đều chạy qua Mage và lưu output trong thư mục tạm; không dùng `go test` trực tiếp.
+- Không chạy lại `mage lint:fix` trực tiếp trên checkout Windows CRLF hiện tại: `goheader` auto-fixer đã làm hỏng license header hàng loạt trong lần thử và các thay đổi đó đã được khôi phục hoàn toàn. Lint chỉ trên diff mới với `goheader` tắt đã đạt 0 lỗi.
+- Khi thêm Telegram, dùng focused Mage tests và so sánh với baseline này; không quy lỗi nền cho thay đổi mới.
 
 ### Bước 2 — Chốt cách nhận Telegram updates
 

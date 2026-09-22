@@ -63,6 +63,15 @@ Verification completed on 2026-09-22:
 - Full `vue-tsc` typecheck: still fails on numerous pre-existing upstream errors. Filtered output contains no error originating in `AudioRecorder.vue` or its test after the compatibility fix.
 - Backend tests were not run because Go 1.27 and Mage are not installed in this environment; this foundation change does not modify backend code.
 
+Backend environment update on 2026-09-22:
+
+- Go 1.27.0, Mage 1.17.2, and WinLibs GCC 16.1.0 are installed; CGO is enabled for the SQLite driver.
+- The Mage development harness now compiles on Windows by keeping Unix process-group handling in a Unix-only Mage file and using a direct-process fallback on Windows.
+- Selective embedded fixture paths use slash-separated `io/fs` paths, allowing web tests to load fixtures on Windows.
+- `mage test:web` passes on Windows (`pkg/webtests`, 136.738s).
+- `mage test:feature` runs to completion but still fails in six pre-existing/platform-sensitive packages: `pkg/config`, `pkg/db`, `pkg/log`, `pkg/metrics`, `pkg/models`, and `pkg/modules/keyvalue`. The failures cover Unix-only path expectations, Windows log-file locking, date/time-sensitive notification assertions, fixture-count drift, and TTL timing. Telegram work must use focused Mage tests and must not add failures beyond this recorded baseline.
+- Full `mage lint:fix` is unsafe in this Windows CRLF checkout because the `goheader` auto-fixer corrupts Go license headers. The accidental edits were fully reverted. A read-only `golangci-lint` run limited to the new diff, with `goheader` disabled, reports zero issues.
+
 ### MVP A — Telegram reminders
 
 - Add opt-in Telegram configuration; never commit the bot token.
