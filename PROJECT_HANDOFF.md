@@ -4,6 +4,8 @@ Last updated: 2026-09-22
 
 This file is the source of truth for continuing this project in another Codex task. Read it together with the repository `AGENTS.md` before making changes.
 
+For a Vietnamese conversation summary, guided next-step sequence, and a ready-to-paste prompt for a new chat, also read `NEXT_CHAT_BRIEF_VI.md`.
+
 ## Locked decisions
 
 - Product strategy: extend a fork of Vikunja; do not rebuild the application or replace its backend with Supabase.
